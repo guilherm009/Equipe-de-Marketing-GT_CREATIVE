@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Equipe de Marketing - RPBR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #ff0055;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      letter-spacing: 2px;
+    }
+
+    .descricao {
+      text-align: center;
+      padding: 15px 20px;
+      background: #111;
+      font-size: 1.1em;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 30px;
+    }
+
+    .card {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(255, 0, 85, 0.3);
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      border: 3px solid #ff0055;
+    }
+
+    .card h2 {
+      color: #00e6e6;
+      margin: 10px 0 5px;
+    }
+
+    .card p {
+      color: #ccc;
+    }
+
+    .card button {
+      margin-top: 10px;
+      background: #ff0055;
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      font-size: 0.9em;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .instagram {
+      background: #ff0055;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .instagram a {
+      color: #fff;
+      font-size: 1.2em;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .instagram a:hover {
+      color: #ff0;
+      text-decoration: underline;
+    }
+
+    footer {
+      background: #000;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+    }
+
+    .modal-content {
+      background-color: #1e1e1e;
+      margin: 10% auto;
+      padding: 30px;
+      border: 1px solid #888;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 12px;
+      text-align: center;
+      color: white;
+    }
+
+    .close {
+      color: #ff5555;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #ff0;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5em;
+      }
+      .modal-content {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fecharModal()">&times;</span>
+      <h2 id="modalNome"></h2>
+      <p id="modalCargo"></p>
+      <p id="modalDescricao"></p>
+    </div>
+  </div>
+
+  <script>
+    const equipe = [
+      {
+        nome: "Guilherme Alexandre",
+        cargo: "Líder de Marketing",
+        imagem: "https://i.pravatar.cc/150?img=12",
+        descricao: "Responsável por coordenar todas as estratégias de marketing e campanhas digitais."
+      },
+      {
+        nome: "Tiago Santos",
+        cargo: "Designer Gráfico",
+        imagem: "https://i.pravatar.cc/150?img=11",
+        descricao: "Especialista em identidade visual e peças promocionais do RPBR."
+      },
+      {
+        nome: "Pimenta",
+        cargo: "Social Media",
+        imagem: "https://i.pravatar.cc/150?img=15",
+        descricao: "Cuida das redes sociais com postagens criativas e engajamento com a comunidade."
+      },
+      {
+        nome: "Lzin",
+        cargo: "Analista de Dados",
+        imagem: "https://i.pravatar.cc/150?img=22",
+        descricao: "Responsável por analisar métricas e otimizar as estratégias digitais do jogo."
+      },
+      {
+        nome: "Polar",
+        cargo: "Gestor de Campanhas",
+        imagem: "https://i.pravatar.cc/150?img=28",
+        descricao: "Cria campanhas impactantes e organiza eventos especiais dentro e fora do RPBR."
+      }
+    ];
+
+    const header = document.createElement('header');
+    const titulo = document.createElement('h1');
+    titulo.textContent = "Equipe de Marketing - RPBR";
+    header.appendChild(titulo);
+    document.body.appendChild(header);
+
+    const descricao = document.createElement('div');
+    descricao.className = "descricao";
+    descricao.textContent = "Conheça o time criativo responsável por divulgar e fazer o universo RPBR crescer nas redes!";
+    document.body.appendChild(descricao);
+
+    const container = document.createElement('div');
+    container.className = 'container';
+
+    equipe.forEach(pessoa => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const img = document.createElement('img');
+      img.src = pessoa.imagem;
+      img.alt = pessoa.nome;
+
+      const nome = document.createElement('h2');
+      nome.textContent = pessoa.nome;
+
+      const cargo = document.createElement('p');
+      cargo.textContent = pessoa.cargo;
+
+      const botao = document.createElement('button');
+      botao.textContent = "Mais detalhes";
+      botao.onclick = () => abrirModal(pessoa);
+
+      card.appendChild(img);
+      card.appendChild(nome);
+      card.appendChild(cargo);
+      card.appendChild(botao);
+      container.appendChild(card);
+    });
+
+    document.body.appendChild(container);
+
+    const instagram = document.createElement('div');
+    instagram.className = 'instagram';
+    instagram.innerHTML = `Siga a agência no Instagram: <a href="https://instagram.com/gtcreative2025" target="_blank">@gtcreative2025</a>`;
+    document.body.appendChild(instagram);
+
+    const footer = document.createElement('footer');
+    footer.textContent = "RPBR © 2025 - Todos os direitos reservados | GT_creative";
+    document.body.appendChild(footer);
+
+    function abrirModal(pessoa) {
+      document.getElementById('modal').style.display = 'block';
+      document.getElementById('modalNome').textContent = pessoa.nome;
+      document.getElementById('modalCargo').textContent = pessoa.cargo;
+      document.getElementById('modalDescricao').textContent = pessoa.descricao;
+    }
+
+    function fecharModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('modal');
+      if (event.target == modal) {
+        fecharModal();
+      }
+    }
+  </script>
+</body>
+</html>
